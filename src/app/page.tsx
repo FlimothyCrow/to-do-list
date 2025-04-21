@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Task from "./components/Task";
+import Link from "next/link";
 
 export default function Home() {
     return (
@@ -23,6 +25,11 @@ export default function Home() {
                     <li className="tracking-[-.01em]">
                         Save and see your changes instantly. Here's one for a
                         test.
+                    </li>
+                    <li>
+                        <Link href={`/TaskList`}>
+                            click here for the Task List
+                        </Link>
                     </li>
                 </ol>
 
