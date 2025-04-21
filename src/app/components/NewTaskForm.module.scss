@@ -1,0 +1,17 @@
+.taskContainer {
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #2f2f2f;
+    border-radius: 8px;
+}
+
+/* Base button styles */
+.buttonClass {
+    padding: 0.35rem;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
