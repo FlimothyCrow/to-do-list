@@ -1,10 +1,15 @@
 import React from "react";
+import styles from "./Task.module.scss";
 
-const Task = () => {
+type TaskProps = {
+    title: string;
+};
+
+const Task: React.FC<TaskProps> = ({ title }) => {
     return (
-        <>
-            <div>Titular task text test</div>
-        </>
+        <div className={styles.taskContainer}>
+            <h2 className={styles.taskTitle}>{title}</h2>
+        </div>
     );
 };
 
