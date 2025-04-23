@@ -11,6 +11,10 @@
     font-weight: bold;
 }
 
+.taskTitleCompleted {
+    text-decoration: line-through;
+}
+
 .checkboxContainer {
     padding-right: 1rem;
 }

@@ -1,5 +1,6 @@
 import styles from "./Task.module.scss";
 import React, { useState } from "react";
+import clsx from "clsx";
 
 type TaskProps = {
     title: string;
@@ -18,7 +19,14 @@ const Task: React.FC<TaskProps> = ({ title, completed }) => {
                     className={styles.checkbox}
                 />
             </label>
-            <h2 className={styles.taskTitle}>{title}</h2>
+            <h2
+                className={clsx(
+                    styles.addTaskButton,
+                    isChecked && styles.taskTitleCompleted
+                )}
+            >
+                {title}
+            </h2>
         </div>
     );
 };
