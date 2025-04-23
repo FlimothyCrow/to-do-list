@@ -1,6 +1,7 @@
 "use client";
 import styles from "./NewTaskForm.module.scss";
 import React, { useState } from "react";
+import clsx from "clsx";
 
 type NewTaskFormProps = {
     onAddTask: (title: string) => void;
@@ -26,8 +27,10 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onAddTask }) => {
             />
             <button
                 onClick={handleSubmit}
-                className={styles.addTaskButton}
-                disabled={taskTitle.trim() === ""}
+                className={clsx(
+                    styles.addTaskButton,
+                    taskTitle.trim() === "" && styles.disabled
+                )}
             >
                 Add New Task
             </button>
