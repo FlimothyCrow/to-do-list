@@ -4,14 +4,38 @@ import Task from "../components/Task";
 import React, { useState } from "react";
 
 export default function Home() {
-    const [tasks, setTasks] = useState<string[]>([
-        "buy some trash",
-        "drink water",
-        "big jug hot cheese",
+    interface TaskObject {
+        id: string;
+        title: string;
+        completed: boolean;
+    }
+
+    const [tasks, setTasks] = useState<TaskObject[]>([
+        {
+            id: "1",
+            title: "buy some trash",
+            completed: false,
+        },
+        {
+            id: "2",
+            title: "drink water",
+            completed: false,
+        },
+        {
+            id: "3",
+            title: "big jug hot cheese",
+            completed: true,
+        },
     ]);
 
     const addTask = (title: string) => {
-        setTasks((prev) => [...prev, title]);
+        const newTask: TaskObject = {
+            id: crypto.randomUUID(),
+            title,
+            completed: false,
+        };
+
+        setTasks((prev) => [...prev, newTask]);
     };
 
     return (
@@ -22,9 +46,9 @@ export default function Home() {
             </h1>
 
             <ul>
-                {tasks.map((task, index) => (
-                    <li key={index}>
-                        <Task title={task} />
+                {tasks.map((task) => (
+                    <li key={task.id}>
+                        <Task title={task.title} completed={task.completed} />
                     </li>
                 ))}
             </ul>

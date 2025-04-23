@@ -1,4 +1,6 @@
 .taskContainer {
+    display: flex;
+    align-items: center;
     padding: 1rem;
     margin: 1rem;
     background-color: #2f2f2f;
@@ -7,4 +9,13 @@
 
 .taskTitle {
     font-weight: bold;
+}
+
+.checkboxContainer {
+    padding-right: 1rem;
+}
+
+.checkbox {
+    accent-color: #ff8da1;
+    transform: scale(1.5);
 }
