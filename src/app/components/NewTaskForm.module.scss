@@ -8,14 +8,14 @@
 .addTaskButton {
     padding: 0.35rem;
     border-radius: 5px;
-    background-color: #00ff00;
-    color: black;
+    background-color: #008000;
+    color: white;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.disabled {
+.disabledTaskButton {
     cursor: not-allowed;
     pointer-events: none;
     background-color: red;

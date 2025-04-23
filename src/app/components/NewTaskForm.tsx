@@ -29,7 +29,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onAddTask }) => {
                 onClick={handleSubmit}
                 className={clsx(
                     styles.addTaskButton,
-                    taskTitle.trim() === "" && styles.disabled
+                    taskTitle.trim() === "" && styles.disabledTaskButton
                 )}
             >
                 Add New Task
