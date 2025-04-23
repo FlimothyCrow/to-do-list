@@ -16,16 +16,17 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onAddTask }) => {
     };
 
     return (
-        <div>
+        <div className={styles.taskContainer}>
             <input
                 type="text"
                 value={taskTitle}
                 onChange={(e) => setTaskTitle(e.target.value)}
                 placeholder="Enter task title"
+                className={styles.inputTask}
             />
             <button
                 onClick={handleSubmit}
-                className={styles.buttonClass}
+                className={styles.addTaskButton}
                 disabled={taskTitle.trim() === ""}
             >
                 Add New Task

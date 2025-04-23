@@ -1,12 +1,11 @@
 .taskContainer {
-    padding: 1rem;
+    padding: 0.35rem 0.35rem 0.35rem 0;
     margin: 1rem;
-    background-color: #2f2f2f;
     border-radius: 8px;
 }
 
 /* Base button styles */
-.buttonClass {
+.addTaskButton {
     padding: 0.35rem;
     border-radius: 5px;
     background-color: red;
@@ -14,4 +13,11 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.inputTask {
+    background-color: #2f2f2f;
+    margin-right: 1rem;
+    border-radius: 5px;
+    padding-left: 0.35rem;
 }
