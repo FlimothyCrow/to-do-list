@@ -5,11 +5,12 @@ import clsx from "clsx";
 type TaskProps = {
     id: string;
     title: string;
+    completed: boolean;
     onUpdateTask: (title: string) => void;
 };
 
-const Task: React.FC<TaskProps> = ({ id, title, onUpdateTask }) => {
-    const [isChecked, setIsChecked] = useState(false);
+const Task: React.FC<TaskProps> = ({ id, title, completed, onUpdateTask }) => {
+    const [isChecked, setIsChecked] = useState(completed);
 
     const toggleCompleted = (
         e: React.ChangeEvent<HTMLInputElement>,

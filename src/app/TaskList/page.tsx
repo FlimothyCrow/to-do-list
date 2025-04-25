@@ -24,10 +24,11 @@ export default function Home() {
         {
             id: "3",
             title: "big jug hot cheese",
-            completed: false,
+            completed: true,
         },
     ]);
     console.log(tasks);
+
     const addTask = (title: string) => {
         const newTask: TaskObject = {
             id: crypto.randomUUID(),
@@ -61,6 +62,7 @@ export default function Home() {
                         <Task
                             id={task.id}
                             title={task.title}
+                            completed={task.completed}
                             onUpdateTask={updateTask}
                         />
                     </li>
