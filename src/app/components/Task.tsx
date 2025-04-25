@@ -3,19 +3,30 @@ import React, { useState } from "react";
 import clsx from "clsx";
 
 type TaskProps = {
+    id: string;
     title: string;
-    completed: boolean;
+    onUpdateTask: (title: string) => void;
 };
 
-const Task: React.FC<TaskProps> = ({ title, completed }) => {
+const Task: React.FC<TaskProps> = ({ id, title, onUpdateTask }) => {
     const [isChecked, setIsChecked] = useState(false);
+
+    const toggleCompleted = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        identifier: string
+    ) => {
+        setIsChecked(e.target.checked);
+        onUpdateTask(identifier);
+        console.log("toggleCompleted has been called");
+    };
+
     return (
         <div className={styles.taskContainer}>
             <label className={styles.checkboxContainer}>
                 <input
                     type="checkbox"
                     checked={isChecked}
-                    onChange={(e) => setIsChecked(e.target.checked)}
+                    onChange={(e) => toggleCompleted(e, id)}
                     className={styles.checkbox}
                 />
             </label>

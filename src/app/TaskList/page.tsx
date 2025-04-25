@@ -24,10 +24,10 @@ export default function Home() {
         {
             id: "3",
             title: "big jug hot cheese",
-            completed: true,
+            completed: false,
         },
     ]);
-
+    console.log(tasks);
     const addTask = (title: string) => {
         const newTask: TaskObject = {
             id: crypto.randomUUID(),
@@ -36,6 +36,16 @@ export default function Home() {
         };
 
         setTasks((prev) => [...prev, newTask]);
+    };
+
+    const updateTask = (identifier: string) => {
+        setTasks((prevTasks) =>
+            prevTasks.map((task) =>
+                task.id === identifier
+                    ? { ...task, completed: !task.completed }
+                    : task
+            )
+        );
     };
 
     return (
@@ -48,7 +58,11 @@ export default function Home() {
             <ul>
                 {tasks.map((task) => (
                     <li key={task.id}>
-                        <Task title={task.title} completed={task.completed} />
+                        <Task
+                            id={task.id}
+                            title={task.title}
+                            onUpdateTask={updateTask}
+                        />
                     </li>
                 ))}
             </ul>
