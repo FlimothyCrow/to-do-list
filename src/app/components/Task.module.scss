@@ -3,8 +3,10 @@
     align-items: center;
     padding: 1rem;
     margin: 1rem;
-    background-color: #2f2f2f;
+    background-color: #ff8da1;
     border-radius: 8px;
+    color: black;
+    font-family: "Courier New", Courier, monospace;
 }
 
 .taskTitle {
@@ -20,6 +22,6 @@
 }
 
 .checkbox {
-    accent-color: #ff8da1;
+    accent-color: #000000;
     transform: scale(1.5);
 }
