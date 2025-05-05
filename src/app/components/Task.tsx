@@ -3,13 +3,18 @@ import React, { useState } from "react";
 import clsx from "clsx";
 
 type TaskProps = {
-    id: string;
+    UUID: string;
     title: string;
     completed: boolean;
     onUpdateTask: (title: string) => void;
 };
 
-const Task: React.FC<TaskProps> = ({ id, title, completed, onUpdateTask }) => {
+const Task: React.FC<TaskProps> = ({
+    UUID,
+    title,
+    completed,
+    onUpdateTask,
+}) => {
     const [isChecked, setIsChecked] = useState(completed);
 
     const toggleCompleted = (
@@ -27,7 +32,7 @@ const Task: React.FC<TaskProps> = ({ id, title, completed, onUpdateTask }) => {
                 <input
                     type="checkbox"
                     checked={isChecked}
-                    onChange={(e) => toggleCompleted(e, id)}
+                    onChange={(e) => toggleCompleted(e, UUID)}
                     className={styles.checkbox}
                 />
             </label>
