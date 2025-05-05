@@ -12,6 +12,12 @@ type DropdownProps = {
     onToggleDirection: () => void;
 };
 
+const sorters = {
+    UUID: "Date Created",
+    title: "Title",
+    completed: "Status",
+};
+
 const Dropdown: React.FC<DropdownProps> = ({
     sorter,
     ascending,
@@ -19,9 +25,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     onToggleDirection,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedSorter, setselectedSorter] = useState("Sort By");
-
-    const sorters = ["UUID", "title", "completed"];
+    const [selectedSorter, setselectedSorter] = useState(sorters[sorter]);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -45,7 +49,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                                font-medium text-black hover:bg-gray-50"
                     onClick={toggleDropdown}
                 >
-                    {selectedSorter}
+                    Sort by {selectedSorter}
                     <FaCaretDown className="ml-2" />
                 </button>
 
@@ -58,7 +62,9 @@ const Dropdown: React.FC<DropdownProps> = ({
                                     ring-opacity-5 focus:outline-none"
                     >
                         <div className="py-1">
-                            {sorters.map((sorter, index) => (
+                            {(
+                                Object.keys(sorters) as (keyof typeof sorters)[]
+                            ).map((sorter, index) => (
                                 <a
                                     key={index}
                                     href="#"
@@ -67,7 +73,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                                                hover:bg-gray-100"
                                     onClick={() => handleSelect(sorter)}
                                 >
-                                    {sorter}
+                                    {sorters[sorter]}
                                 </a>
                             ))}
                         </div>
