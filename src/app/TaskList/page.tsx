@@ -2,7 +2,7 @@
 import NewTaskForm from "app/components/NewTaskForm";
 import Task from "../components/Task";
 import React, { useState } from "react";
-import Dropdown from "../components/Dropdown";
+import Dropdown from "../components/SorterDropdown";
 
 export interface TaskObject {
     UUID: string;
