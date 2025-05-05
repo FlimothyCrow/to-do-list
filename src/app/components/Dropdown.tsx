@@ -18,22 +18,17 @@ const sorters = {
     completed: "Status",
 };
 
-const Dropdown: React.FC<DropdownProps> = ({
-    sorter,
-    ascending,
-    onSortSelect,
-    onToggleDirection,
-}) => {
+const Dropdown: React.FC<DropdownProps> = ({ sorter, onSortSelect }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedSorter, setselectedSorter] = useState(sorters[sorter]);
+    const [selectedSorter, setSelectedSorter] =
+        useState<keyof typeof sorters>(sorter);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
-
-    const handleSelect = (sorter: string) => {
-        onSortSelect(sorter as keyof TaskObject);
-        setselectedSorter(sorter);
+    const handleSelect = (key: keyof typeof sorters) => {
+        onSortSelect(key);
+        setSelectedSorter(key);
         setIsOpen(false);
     };
 
@@ -49,7 +44,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                                font-medium text-black hover:bg-gray-50"
                     onClick={toggleDropdown}
                 >
-                    Sort by {selectedSorter}
+                    Sort by {sorters[selectedSorter]}
                     <FaCaretDown className="ml-2" />
                 </button>
 
