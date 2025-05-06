@@ -2,11 +2,12 @@
 import NewTaskForm from "app/components/NewTaskForm";
 import Task from "../components/Task";
 import React, { useState } from "react";
-import Dropdown from "../components/SorterDropdown";
+import SorterDropdown from "../components/SorterDropdown";
 
 export interface TaskObject {
     UUID: string;
     title: string;
+    date: number;
     completed: boolean;
 }
 
@@ -19,25 +20,29 @@ export default function Home() {
         {
             UUID: "1",
             title: "purchase some trash",
+            date: 12345,
             completed: false,
         },
         {
             UUID: "2",
             title: "drink water",
+            date: 1234567,
             completed: true,
         },
         {
             UUID: "3",
             title: "big jug hot cheese",
+            date: 123456,
             completed: false,
         },
     ]);
     console.log(tasks);
 
-    const addTask = (title: string) => {
+    const addTask = (title: string, date: number) => {
         const newTask: TaskObject = {
             UUID: crypto.randomUUID(),
             title,
+            date,
             completed: false,
         };
 
@@ -56,10 +61,6 @@ export default function Home() {
 
     const sortSelect = (key: keyof TaskObject) => {
         setSorter(key);
-    };
-
-    const toggleDirection = () => {
-        setAscending((prev) => !prev);
     };
 
     const sortTaskArray = <T extends TaskObject, K extends keyof T>(
@@ -84,23 +85,17 @@ export default function Home() {
             return 0;
         });
     };
-    console.log(`sorter is set to ${sorter}`);
+
     return (
         <>
-            <h1>Welcome to the task list</h1>
             <div className="header">
-                {" "}
-                <Dropdown
+                <NewTaskForm onAddTask={addTask} />
+                <SorterDropdown
                     sorter={sorter}
                     ascending={ascending}
                     onSortSelect={sortSelect}
-                    onToggleDirection={toggleDirection}
                 />
-                <h1>
-                    <NewTaskForm onAddTask={addTask} />
-                </h1>
             </div>
-
             <ul>
                 {sortTaskArray(
                     tasks,

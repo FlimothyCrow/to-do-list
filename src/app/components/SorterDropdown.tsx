@@ -9,13 +9,13 @@ type DropdownProps = {
     sorter: keyof TaskObject;
     ascending: boolean;
     onSortSelect: (key: keyof TaskObject) => void;
-    onToggleDirection: () => void;
 };
 
 const sorters = {
-    UUID: "Date Created",
     title: "Title",
     completed: "Status",
+    UUID: "Unique ID",
+    date: "Date Created",
 };
 
 const Dropdown: React.FC<DropdownProps> = ({ sorter, onSortSelect }) => {

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import clsx from "clsx";
 
 type NewTaskFormProps = {
-    onAddTask: (title: string) => void;
+    onAddTask: (title: string, date: number) => void;
 };
 
 const NewTaskForm: React.FC<NewTaskFormProps> = ({ onAddTask }) => {
@@ -12,7 +12,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onAddTask }) => {
 
     const handleSubmit = (): void => {
         if (taskTitle.trim() === "") return;
-        onAddTask(taskTitle.trim());
+        onAddTask(taskTitle.trim(), Date.now());
         setTaskTitle("");
     };
 
