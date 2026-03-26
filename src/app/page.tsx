@@ -23,12 +23,11 @@ export default function Home() {
                         .
                     </li>
                     <li className="tracking-[-.01em]">
-                        Save and see your changes instantly. Here's one for a
-                        test.
+                        Save and see your changes instantly.
                     </li>
                     <li>
                         <Link href={`/TaskList`}>
-                            click here for the Task List
+                            Click here for the Task List.
                         </Link>
                     </li>
                 </ol>
