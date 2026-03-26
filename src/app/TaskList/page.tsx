@@ -2,6 +2,7 @@
 import NewTaskForm from "app/components/NewTaskForm";
 import Task from "../components/Task";
 import React, { useState } from "react";
+import styles from "./TaskList.module.scss";
 import SorterDropdown from "../components/SorterDropdown";
 
 export interface TaskObject {
@@ -54,8 +55,8 @@ export default function Home() {
             prevTasks.map((task) =>
                 task.UUID === identifier
                     ? { ...task, completed: !task.completed }
-                    : task
-            )
+                    : task,
+            ),
         );
     };
 
@@ -66,7 +67,7 @@ export default function Home() {
     const sortTaskArray = <T extends TaskObject, K extends keyof T>(
         arrayOfObjects: T[],
         sorter: K,
-        ascending: boolean
+        ascending: boolean,
     ): T[] => {
         return arrayOfObjects.toSorted((a, b) => {
             const valueA = a[sorter];
@@ -87,7 +88,7 @@ export default function Home() {
     };
 
     return (
-        <>
+        <div className={styles.taskListContainer}>
             <div className="header">
                 <NewTaskForm onAddTask={addTask} />
                 <SorterDropdown
@@ -100,7 +101,7 @@ export default function Home() {
                 {sortTaskArray(
                     tasks,
                     sorter as keyof TaskObject,
-                    ascending
+                    ascending,
                 ).map((task) => (
                     <li key={task.UUID}>
                         <Task
@@ -112,6 +113,6 @@ export default function Home() {
                     </li>
                 ))}
             </ul>
-        </>
+        </div>
     );
 }
