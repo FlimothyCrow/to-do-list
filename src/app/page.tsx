@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Task from "./components/Task";
 import Link from "next/link";
 
 export default function Home() {
@@ -28,6 +27,11 @@ export default function Home() {
                     <li>
                         <Link href={`/TaskList`}>
                             Click here for the Task List.
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={`/FlaskTest`}>
+                            Do a click here for the Flask test.
                         </Link>
                     </li>
                 </ol>
