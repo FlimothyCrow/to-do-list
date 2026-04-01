@@ -1,42 +1,33 @@
-"use client"; // Required because we are using useEffect/useState
+"use client";
 import { useEffect, useState } from "react";
 
-export default function Home() {
-    const [data, setData] = useState(null);
+export default function TodoList() {
+    const [tasks, settasks] = useState<any[]>([]);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetching from your Flask local server
         fetch("http://127.0.0.1:5000/api/data")
             .then((res) => res.json())
-            .then((data) => setData(data))
-            .catch((err) => console.error("Flask is likely not running:", err));
+            .then((data) => {
+                settasks(data.tasks);
+                setLoading(false);
+            })
+            .catch((err) => console.error("Error fetching data:", err));
     }, []);
+    console.log(tasks);
+    if (loading) return <p>Loading Sophie's list...</p>;
 
     return (
-        <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
-            <h1>Next.js + Flask Connection Test</h1>
-
-            {!data ? (
-                <p>Waiting for Flask...</p>
-            ) : (
-                <div
-                    style={{
-                        border: "1px solid #ccc",
-                        padding: "20px",
-                        borderRadius: "8px",
-                    }}
-                >
-                    <p>
-                        <strong>Status:</strong> {data.status}
-                    </p>
-                    <p>
-                        <strong>Message:</strong> {data.message}
-                    </p>
-                    <p>
-                        <strong>Tools in use:</strong> {data.items.join(", ")}
-                    </p>
-                </div>
-            )}
+        <div>
+            <h1>To-Do List</h1>
+            <ul>
+                {tasks.map((task) => (
+                    <li key={task.id}>
+                        {task.body} {task.done ? "✅" : "❌"}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

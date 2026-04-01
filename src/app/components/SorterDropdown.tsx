@@ -12,25 +12,23 @@ type DropdownProps = {
 };
 
 const sorters = {
-    title: "Title",
-    completed: "Status",
-    UUID: "Unique ID",
-    date: "Date Created",
+    body: "Title",
+    done: "Status",
 };
 
-const Dropdown: React.FC<DropdownProps> = ({ sorter, onSortSelect }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedSorter, setSelectedSorter] =
-        useState<keyof typeof sorters>(sorter);
+// const Dropdown: React.FC<DropdownProps> = ({ sorter, onSortSelect }) => {
+//     const [isOpen, setIsOpen] = useState(false);
+//     const [selectedSorter, setSelectedSorter] =
+//         useState<keyof typeof sorters>(sorter);
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    };
-    const handleSelect = (key: keyof typeof sorters) => {
-        onSortSelect(key);
-        setSelectedSorter(key);
-        setIsOpen(false);
-    };
+//     const toggleDropdown = () => {
+//         setIsOpen(!isOpen);
+//     };
+//     const handleSelect = (key: keyof typeof sorters) => {
+//         onSortSelect(key);
+//         setSelectedSorter(key);
+//         setIsOpen(false);
+//     };
 
     return (
         <div className="flex justify-center">
@@ -49,7 +47,7 @@ const Dropdown: React.FC<DropdownProps> = ({ sorter, onSortSelect }) => {
                 </button>
 
                 {/* Dropdown menu */}
-                {isOpen && (
+                {/* {isOpen && (
                     <div
                         className="origin-top-right absolute
                                     right-0 mt-2 w-56 rounded-md
@@ -73,7 +71,7 @@ const Dropdown: React.FC<DropdownProps> = ({ sorter, onSortSelect }) => {
                             ))}
                         </div>
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );

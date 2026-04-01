@@ -1,114 +1,89 @@
 "use client";
 import NewTaskForm from "app/components/NewTaskForm";
 import Task from "../components/Task";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./TaskList.module.scss";
 import SorterDropdown from "../components/SorterDropdown";
 
 export interface TaskObject {
-    UUID: string;
-    title: string;
-    date: number;
-    completed: boolean;
+    taskid: number;
+    taskbody: string;
+    taskdone: boolean;
+    taskdate: number;
+    taskrecurring: boolean;
+    user_id: number;
 }
 
 export default function Home() {
-    const [sorter, setSorter] = useState<keyof TaskObject>("completed");
+    // const [sorter, setSorter] = useState<keyof TaskObject>("done");
 
     const [ascending, setAscending] = useState(true);
 
-    const [tasks, setTasks] = useState<TaskObject[]>([
-        {
-            UUID: "1",
-            title: "purchase some trash",
-            date: 12345,
-            completed: false,
-        },
-        {
-            UUID: "2",
-            title: "drink water",
-            date: 1234567,
-            completed: true,
-        },
-        {
-            UUID: "3",
-            title: "big jug hot cheese",
-            date: 123456,
-            completed: false,
-        },
-    ]);
-    console.log(tasks);
+    const [tasks, setTasks] = useState<TaskObject[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const addTask = (title: string, date: number) => {
-        const newTask: TaskObject = {
-            UUID: crypto.randomUUID(),
-            title,
-            date,
-            completed: false,
-        };
+    useEffect(() => {
+        fetch("http://127.0.0.1:5000/api/data")
+            .then((res) => res.json())
+            .then((data) => {
+                setTasks(data.tasks);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Error fetching tasks:", err);
+                setLoading(false);
+            });
+    }, []);
 
-        setTasks((prev) => [...prev, newTask]);
-    };
+    if (loading) return <p>Loading tasks...</p>;
 
-    const updateTask = (identifier: string) => {
-        setTasks((prevTasks) =>
-            prevTasks.map((task) =>
-                task.UUID === identifier
-                    ? { ...task, completed: !task.completed }
-                    : task,
-            ),
-        );
-    };
+    // const sortSelect = (key: keyof TaskObject) => {
+    //     setSorter(key);
+    // };
 
-    const sortSelect = (key: keyof TaskObject) => {
-        setSorter(key);
-    };
+    // const sortTaskArray = <T extends TaskObject, K extends keyof T>(
+    //     arrayOfObjects: T[],
+    //     sorter: K,
+    //     ascending: boolean,
+    // ): T[] => {
+    //     return arrayOfObjects.toSorted((a, b) => {
+    //         const valueA = a[sorter];
+    //         const valueB = b[sorter];
 
-    const sortTaskArray = <T extends TaskObject, K extends keyof T>(
-        arrayOfObjects: T[],
-        sorter: K,
-        ascending: boolean,
-    ): T[] => {
-        return arrayOfObjects.toSorted((a, b) => {
-            const valueA = a[sorter];
-            const valueB = b[sorter];
+    //         const nameA = String(valueA).toUpperCase();
+    //         const nameB = String(valueB).toUpperCase();
+    //         if (ascending) {
+    //             if (nameA < nameB) return -1;
+    //             if (nameA > nameB) return 1;
+    //         } else {
+    //             if (nameA < nameB) return 1;
+    //             if (nameA > nameB) return -1;
+    //         }
 
-            const nameA = String(valueA).toUpperCase();
-            const nameB = String(valueB).toUpperCase();
-            if (ascending) {
-                if (nameA < nameB) return -1;
-                if (nameA > nameB) return 1;
-            } else {
-                if (nameA < nameB) return 1;
-                if (nameA > nameB) return -1;
-            }
-
-            return 0;
-        });
-    };
+    //         return 0;
+    //     });
+    // };
 
     return (
         <div className={styles.taskListContainer}>
             <div className="header">
-                <NewTaskForm onAddTask={addTask} />
-                <SorterDropdown
+                <NewTaskForm onAddTask={console.log} />
+                {/* <SorterDropdown
                     sorter={sorter}
                     ascending={ascending}
                     onSortSelect={sortSelect}
-                />
+                /> */}
             </div>
             <ul>
-                {sortTaskArray(
-                    tasks,
-                    sorter as keyof TaskObject,
-                    ascending,
-                ).map((task) => (
-                    <li key={task.UUID}>
+                {tasks.map((task) => (
+                    <li key={task.taskid}>
                         <Task
-                            UUID={task.UUID}
-                            title={task.title}
-                            completed={task.completed}
-                            onUpdateTask={updateTask}
+                            taskbody={task.taskbody}
+                            taskid={task.taskid}
+                            taskdone={task.taskdone}
+                            taskdate={task.taskdate}
+                            taskrecurring={task.taskrecurring}
+                            user_id={task.user_id}
                         />
                     </li>
                 ))}
