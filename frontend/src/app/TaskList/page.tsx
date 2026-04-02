@@ -23,16 +23,24 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/api/data")
-            .then((res) => res.json())
-            .then((data) => {
+        const loadTasks = async () => {
+            try {
+                const response = await fetch("http://127.0.0.1:5000/api/data");
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
                 setTasks(data.tasks);
-                setLoading(false);
-            })
-            .catch((err) => {
+            } catch (err) {
                 console.error("Error fetching tasks:", err);
+            } finally {
                 setLoading(false);
-            });
+            }
+        };
+
+        loadTasks();
     }, []);
 
     if (loading) return <p>Loading tasks...</p>;
