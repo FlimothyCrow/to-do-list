@@ -15,7 +15,7 @@ export interface TaskObject {
 }
 
 export default function Home() {
-    // const [sorter, setSorter] = useState<keyof TaskObject>("done");
+    // const [sorter, setSorter] = useState<keyof TaskObject>("done")
 
     const [ascending, setAscending] = useState(true);
 
