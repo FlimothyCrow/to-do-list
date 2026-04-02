@@ -15,10 +15,8 @@ export interface TaskObject {
 }
 
 export default function Home() {
-    // const [sorter, setSorter] = useState<keyof TaskObject>("done")
-
     const [ascending, setAscending] = useState(true);
-
+    const [status, setStatus] = useState("");
     const [tasks, setTasks] = useState<TaskObject[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -43,44 +41,31 @@ export default function Home() {
         loadTasks();
     }, []);
 
+    const handleSubmit = async () => {
+        setStatus("Sending...");
+
+        const response = await fetch("http://127.0.0.1:5000/api/insertuser", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: "Billiam",
+                useremail: "bill@buxaplenty.net",
+            }),
+        });
+
+        if (response.ok) {
+            setStatus("Success!");
+        } else {
+            setStatus("Error sending data.");
+        }
+    };
+
     if (loading) return <p>Loading tasks...</p>;
-
-    // const sortSelect = (key: keyof TaskObject) => {
-    //     setSorter(key);
-    // };
-
-    // const sortTaskArray = <T extends TaskObject, K extends keyof T>(
-    //     arrayOfObjects: T[],
-    //     sorter: K,
-    //     ascending: boolean,
-    // ): T[] => {
-    //     return arrayOfObjects.toSorted((a, b) => {
-    //         const valueA = a[sorter];
-    //         const valueB = b[sorter];
-
-    //         const nameA = String(valueA).toUpperCase();
-    //         const nameB = String(valueB).toUpperCase();
-    //         if (ascending) {
-    //             if (nameA < nameB) return -1;
-    //             if (nameA > nameB) return 1;
-    //         } else {
-    //             if (nameA < nameB) return 1;
-    //             if (nameA > nameB) return -1;
-    //         }
-
-    //         return 0;
-    //     });
-    // };
 
     return (
         <div className={styles.taskListContainer}>
             <div className="header">
                 <NewTaskForm onAddTask={console.log} />
-                {/* <SorterDropdown
-                    sorter={sorter}
-                    ascending={ascending}
-                    onSortSelect={sortSelect}
-                /> */}
             </div>
             <ul>
                 {tasks.map((task) => (
@@ -96,6 +81,14 @@ export default function Home() {
                     </li>
                 ))}
             </ul>
+            <div>
+                <button onClick={handleSubmit}>Send Data</button>
+                <p>{status}</p>
+            </div>
         </div>
     );
 }
+
+// landing page enter username / email?
+// tasklist will need all user info to display
+//
