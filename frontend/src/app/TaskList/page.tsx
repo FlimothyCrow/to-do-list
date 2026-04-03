@@ -3,7 +3,6 @@ import NewTaskForm from "app/components/NewTaskForm";
 import Task from "../components/Task";
 import React, { useState, useEffect } from "react";
 import styles from "./TaskList.module.scss";
-import SorterDropdown from "../components/SorterDropdown";
 
 export interface TaskObject {
     taskid: number;
@@ -15,31 +14,35 @@ export interface TaskObject {
 }
 
 export default function Home() {
-    const [ascending, setAscending] = useState(true);
     const [status, setStatus] = useState("");
     const [tasks, setTasks] = useState<TaskObject[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const loadTasks = async () => {
-            try {
-                const response = await fetch("http://127.0.0.1:5000/api/data");
+    const getTasks = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+        const formData = new FormData(e.currentTarget);
+        const userid = formData.get("userid") as string;
 
-                const data = await response.json();
-                setTasks(data.tasks);
-            } catch (err) {
-                console.error("Error fetching tasks:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
+        try {
+            const res = await fetch("http://127.0.0.1:5000/api/get_tasks", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userid }),
+            });
 
-        loadTasks();
-    }, []);
+            if (!res.ok) throw new Error("Network response was not ok");
+
+            const data = await res.json();
+            console.log("Success:", data);
+            setTasks(data.tasks);
+        } catch (err) {
+            console.error("Submission error:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleAddUser = async () => {
         setStatus("Sending user...");
@@ -82,8 +85,6 @@ export default function Home() {
         }
     };
 
-    if (loading) return <p>Loading tasks...</p>;
-
     return (
         <div className={styles.taskListContainer}>
             <div className="header">
@@ -111,10 +112,18 @@ export default function Home() {
             <div>
                 <button onClick={handleAddTask}>Send dummy task</button>
             </div>
+            <div>
+                <form onSubmit={getTasks}>
+                    <input
+                        name="userid"
+                        type="userid"
+                        placeholder="Please enter user ID"
+                        required
+                        className="text-white p-2 border"
+                    />
+                    <button type="submit">{"Submit"}</button>
+                </form>
+            </div>
         </div>
     );
 }
-
-// landing page enter username / email?
-// tasklist will need all user info to display
-//

@@ -87,24 +87,35 @@ def seed_tasks():
 
 
 # --- ROUTES ---
-@app.route('/api/data', methods=['GET'])
-def get_data():
+@app.route('/api/get_tasks', methods=['POST'])  # Change GET to POST
+def get_tasks():
+    data = request.json
+    if not data:
+        return jsonify({"status": "Error", "message": "No JSON provided"}), 400
+
+    userid = data.get('userid')
+
     conn = sqlite3.connect('to-do-list.db')
     cur = conn.cursor()
-    cur.execute("SELECT * FROM tasks")
+    # Using your existing logic
+    cur.execute("SELECT * FROM tasks WHERE userid = ?;", (userid,))
     rows = cur.fetchall()
     conn.close()
 
-    # Convert the database rows into a list of dictionaries for JSON
-    tasks_list = [
-        {"taskid": r[0], "taskbody": r[1], "taskdone": bool(r[2]), "taskdate": bool(r[3]), "taskrecurring": bool(r[4]),
-         "userid": bool(r[5])}
-        for r in rows]
+    task_list = [
+        {
+            "taskid": r[0],
+            "taskbody": r[1],
+            "taskdone": bool(r[2]),
+            "taskdate": r[3],
+            "taskrecurring": bool(r[4]),
+            "userid": r[5]
+        } for r in rows
+    ]
 
     return jsonify({
         "status": "Success",
-        "message": "Sophie is connected to SQLite!",
-        "tasks": tasks_list
+        "tasks": task_list
     })
 
 
@@ -153,7 +164,6 @@ def insert_task():
         return jsonify({"status": "Success", "message": f"User {taskbody} added!"}), 201
     except Exception as e:
         return jsonify({"status": "Error", "message": str(e)}), 500
-
 
 
 if __name__ == "__main__":
