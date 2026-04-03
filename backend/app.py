@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from pathlib import Path
 from flask_cors import CORS
 import os
@@ -27,7 +27,6 @@ def init_db():
         conn.commit()
         conn.close()
 
-        # We only seed if it's the very first time
         seed_users()
         seed_tasks()
         print("--- FIRST-TIME SETUP COMPLETE ---")
@@ -66,7 +65,7 @@ def seed_tasks():
     conn = sqlite3.connect('to-do-list.db')
     cursor = conn.cursor()
 
-    # (taskbody, taskdone, taskdate, taskrecurring, user_id)
+    # (taskbody, taskdone, taskdate, taskrecurring, userid)
     tasks_to_add = [
         ('Buy Milk', 0, 20240401, 0, 1),  # For Alice (ID 1)
         ('Fix Sink', 0, 20240401, 1, 1),  # For Alice (ID 1)
@@ -75,7 +74,7 @@ def seed_tasks():
 
     try:
         cursor.executemany(
-            """INSERT INTO tasks (taskbody, taskdone, taskdate, taskrecurring, user_id)
+            """INSERT INTO tasks (taskbody, taskdone, taskdate, taskrecurring, userid)
                VALUES (?, ?, ?, ?, ?)""",
             tasks_to_add
         )
@@ -99,7 +98,7 @@ def get_data():
     # Convert the database rows into a list of dictionaries for JSON
     tasks_list = [
         {"taskid": r[0], "taskbody": r[1], "taskdone": bool(r[2]), "taskdate": bool(r[3]), "taskrecurring": bool(r[4]),
-         "user_id": bool(r[5])}
+         "userid": bool(r[5])}
         for r in rows]
 
     return jsonify({
@@ -107,6 +106,54 @@ def get_data():
         "message": "Sophie is connected to SQLite!",
         "tasks": tasks_list
     })
+
+
+@app.route('/api/insertuser', methods=['POST'])
+def insert_user():
+
+    data = request.json
+    username = data.get('username')
+    useremail = data.get('useremail')
+
+    try:
+        conn = sqlite3.connect('to-do-list.db')
+        cur = conn.cursor()
+
+        cur.execute("INSERT INTO users (username, useremail) VALUES (?, ?)",
+                    (username, useremail))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({"status": "Success", "message": f"User {username} added!"}), 201
+    except Exception as e:
+        return jsonify({"status": "Error", "message": str(e)}), 500
+
+
+@app.route('/api/inserttask', methods=['POST'])
+def insert_task():
+
+    data = request.json
+    taskbody = data.get('taskbody')
+    taskdone = data.get('taskdone')
+    taskdate = data.get('taskdate')
+    taskrecurring = data.get('taskrecurring')
+    userid = data.get('userid')
+
+    try:
+        conn = sqlite3.connect('to-do-list.db')
+        cur = conn.cursor()
+
+        cur.execute("INSERT INTO tasks (taskbody, taskdone, taskdate, taskrecurring, userid) VALUES (?, ?, ?, ?, ?)",
+                    (taskbody, taskdone, taskdate, taskrecurring, userid))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({"status": "Success", "message": f"User {taskbody} added!"}), 201
+    except Exception as e:
+        return jsonify({"status": "Error", "message": str(e)}), 500
+
 
 
 if __name__ == "__main__":

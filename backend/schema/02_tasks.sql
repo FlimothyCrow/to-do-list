@@ -1,10 +1,7 @@
 CREATE TABLE IF NOT EXISTS tasks
 (
     taskid
-            INTEGER
-        PRIMARY
-            KEY
-        AUTOINCREMENT,
+            INTEGER PRIMARY KEY,
     taskbody
             TEXT    NOT NULL,
     taskdone
@@ -13,8 +10,8 @@ CREATE TABLE IF NOT EXISTS tasks
             INTEGER NOT NULL,
     taskrecurring
             INTEGER NOT NULL,
-    user_id INTEGER NOT NULL, -- This stores the ID of the user
+    userid INTEGER NOT NULL, -- This stores the ID of the user
 
     -- This creates the link:
-    FOREIGN KEY (user_id) REFERENCES users (userid)
+    FOREIGN KEY (userid) REFERENCES users (userid)
 );

@@ -8,7 +8,7 @@ type TaskProps = {
     taskdone: boolean;
     taskdate: number;
     taskrecurring: boolean;
-    user_id: number;
+    userid: number;
 };
 
 const Task: React.FC<TaskProps> = ({
@@ -17,7 +17,7 @@ const Task: React.FC<TaskProps> = ({
     taskdone,
     taskdate,
     taskrecurring,
-    user_id,
+    userid,
 }) => {
     const [isChecked, setIsChecked] = useState(taskdone);
 
@@ -26,8 +26,6 @@ const Task: React.FC<TaskProps> = ({
         identifier: number,
     ) => {
         setIsChecked(e.target.checked);
-
-        console.log("toggleCompleted has been called");
     };
 
     return (
