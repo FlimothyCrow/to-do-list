@@ -97,7 +97,6 @@ def get_tasks():
 
     conn = sqlite3.connect('to-do-list.db')
     cur = conn.cursor()
-    # Using your existing logic
     cur.execute("SELECT * FROM tasks WHERE userid = ?;", (userid,))
     rows = cur.fetchall()
     conn.close()
@@ -117,6 +116,30 @@ def get_tasks():
         "status": "Success",
         "tasks": task_list
     })
+
+
+@app.route('/api/get_users', methods=['GET'])  # Change GET to POST
+def get_users():
+
+    conn = sqlite3.connect('to-do-list.db')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users")
+    rows = cur.fetchall()
+    conn.close()
+
+    user_list = [
+        {
+            "userid": r[0],
+            "username": r[1],
+            "useremail": (r[2]),
+        } for r in rows
+    ]
+
+    return jsonify({
+        "status": "Success",
+        "users": user_list
+    })
+
 
 
 @app.route('/api/insertuser', methods=['POST'])

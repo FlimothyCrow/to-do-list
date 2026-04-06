@@ -24,14 +24,10 @@ export default function Home() {
                     <li className="tracking-[-.01em]">
                         Save and see your changes instantly.
                     </li>
+
                     <li>
-                        <Link href={`/TaskList`}>
-                            Click here for the Task List.
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={`/FlaskTest`}>
-                            Do a click here for the Flask test.
+                        <Link href={`/UserList`}>
+                            Do a click here for the User list.
                         </Link>
                     </li>
                 </ol>
