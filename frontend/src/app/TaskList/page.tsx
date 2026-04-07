@@ -44,25 +44,6 @@ export default function Home() {
         }
     };
 
-    const handleAddUser = async () => {
-        setStatus("Sending user...");
-
-        const response = await fetch("http://127.0.0.1:5000/api/insertuser", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                username: "Jimjam",
-                useremail: "jimothy@buxaplenty.net",
-            }),
-        });
-
-        if (response.ok) {
-            setStatus("Success user!");
-        } else {
-            setStatus("Error sending data.");
-        }
-    };
-
     const handleAddTask = async () => {
         setStatus("Sending task...");
 
@@ -104,11 +85,7 @@ export default function Home() {
                     </li>
                 ))}
             </ul>
-            <div>
-                <button onClick={handleAddUser}>Send dummy user</button>
 
-                <p>{status}</p>
-            </div>
             <div>
                 <button onClick={handleAddTask}>Send dummy task</button>
             </div>

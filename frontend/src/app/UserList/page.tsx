@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import User from "../components/User";
+import NewUserForm from "app/components/NewUserForm";
 
 export interface UserObject {
     userid: number;
@@ -9,14 +11,9 @@ export interface UserObject {
 }
 
 export default function TodoList() {
-    const [users, setusers] = useState<any[]>([
-        // {
-        //     userid: 39,
-        //     username: "Frenjamin",
-        //     useremail: "frennieswithbennies@gmail.com",
-        // },
-    ]);
+    const [users, setusers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [status, setstatus] = useState("");
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -48,11 +45,21 @@ export default function TodoList() {
             <h1>User List</h1>
             <ul>
                 {users.map((user) => (
-                    <li key={user.userid}>
-                        <div>{user.username}</div>
-                    </li>
+                    <User
+                        userid={user.userid}
+                        username={user.username}
+                        useremail={user.useremail}
+                    />
                 ))}
             </ul>
+
+            <div>
+                <p>{status}</p>
+            </div>
+            <div>
+                <NewUserForm />
+            </div>
+            <div>{status}</div>
             <Link href={`/TaskList`}>Click here for the nuTask List.</Link>
         </div>
     );
