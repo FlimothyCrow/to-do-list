@@ -1,5 +1,4 @@
-import styles from "./Task.module.scss";
-import React, { useState } from "react";
+import styles from "./User.module.scss";
 
 type TaskProps = {
     userid: number;
@@ -9,7 +8,7 @@ type TaskProps = {
 
 const User: React.FC<TaskProps> = ({ username, useremail }) => {
     return (
-        <div className={styles.taskContainer}>
+        <div className={styles.userContainer}>
             <div>Username: {username}</div>
             <div>Email: {useremail}</div>
         </div>

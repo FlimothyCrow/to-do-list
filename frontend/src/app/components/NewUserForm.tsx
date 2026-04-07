@@ -1,5 +1,5 @@
 "use client";
-import styles from "./NewTaskForm.module.scss";
+import styles from "./NewUserForm.module.scss";
 import React, { useState } from "react";
 
 const NewUserForm = ({}) => {
@@ -29,22 +29,27 @@ const NewUserForm = ({}) => {
     };
 
     return (
-        <div className={styles.taskContainer}>
+        <div className={styles.newUserFormContainer}>
             <input
+                className={styles.newUserFormInput}
                 type="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter username"
-                className={styles.inputTask}
             />
             <input
+                className={styles.newUserFormInput}
                 type="useremail"
                 value={useremail}
                 onChange={(e) => setuseremail(e.target.value)}
                 placeholder="Enter email"
-                className={styles.inputTask}
             />
-            <button onClick={handleAddUser}>Submit New User</button>
+            <button
+                className={styles.newUserFormButton}
+                onClick={handleAddUser}
+            >
+                Submit New User
+            </button>
         </div>
     );
 };

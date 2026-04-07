@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import User from "../components/User";
 import NewUserForm from "app/components/NewUserForm";
+import styles from "./UserList.module.scss";
 
 export interface UserObject {
     userid: number;
@@ -41,7 +42,7 @@ export default function TodoList() {
     console.log(users);
 
     return (
-        <div>
+        <div className={styles.userListContainer}>
             <h1>User List</h1>
             <ul>
                 {users.map((user) => (
