@@ -166,7 +166,6 @@ def insert_user():
 
 @app.route('/api/inserttask', methods=['POST'])
 def insert_task():
-
     data = request.json
     taskbody = data.get('taskbody')
     taskdone = data.get('taskdone')
@@ -174,20 +173,34 @@ def insert_task():
     taskrecurring = data.get('taskrecurring')
     userid = data.get('userid')
 
+    conn = None # Initialize so the 'finally' block knows it exists
     try:
         conn = sqlite3.connect('to-do-list.db')
+        conn.execute("PRAGMA foreign_keys = ON;")
         cur = conn.cursor()
 
-        cur.execute("INSERT INTO tasks (taskbody, taskdone, taskdate, taskrecurring, userid) VALUES (?, ?, ?, ?, ?)",
-                    (taskbody, taskdone, taskdate, taskrecurring, userid))
+        cur.execute(
+            "INSERT INTO tasks (taskbody, taskdone, taskdate, taskrecurring, userid) VALUES (?, ?, ?, ?, ?)",
+            (taskbody, taskdone, taskdate, taskrecurring, userid)
+        )
 
         conn.commit()
-        conn.close()
+        return jsonify({"status": "Success", "message": f"Task '{taskbody}' added!"}), 201
 
-        return jsonify({"status": "Success", "message": f"User {taskbody} added!"}), 201
+    except sqlite3.IntegrityError as e:
+        print(f"Foreign Key Violation: {e}")
+        return jsonify({
+            "status": "Error",
+            "message": f"Invalid User ID: {userid}. Task rejected."
+        }), 400
+
     except Exception as e:
         return jsonify({"status": "Error", "message": str(e)}), 500
 
+    finally:
+        # This ensures the connection closes even if the code crashes
+        if conn:
+            conn.close()
 
 if __name__ == "__main__":
     init_db()

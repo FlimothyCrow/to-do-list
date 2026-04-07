@@ -8,20 +8,23 @@ type NewTaskFormProps = {
 };
 
 const NewTaskForm: React.FC<NewTaskFormProps> = ({ onAddTask }) => {
-    const [taskTitle, setTaskTitle] = useState<string>("");
+    const [taskBody, settaskBody] = useState<string>("");
 
     const handleSubmit = (): void => {
-        if (taskTitle.trim() === "") return;
-        onAddTask(taskTitle.trim(), Date.now());
-        setTaskTitle("");
+        if (taskBody.trim() === "") return;
+        onAddTask(taskBody.trim(), Date.now());
+        console.log("sending taskBody ", taskBody, " to TaskList");
+        settaskBody("");
     };
 
     return (
         <div className={styles.taskContainer}>
             <input
                 type="text"
-                value={taskTitle}
-                onChange={(e) => setTaskTitle(e.target.value)}
+                value={taskBody}
+                onChange={(e) => {
+                    settaskBody(e.target.value);
+                }}
                 placeholder="Enter task title"
                 className={styles.inputTask}
             />
@@ -29,7 +32,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onAddTask }) => {
                 onClick={handleSubmit}
                 className={clsx(
                     styles.addTaskButton,
-                    taskTitle.trim() === "" && styles.disabledTaskButton
+                    taskBody.trim() === "" && styles.disabledTaskButton,
                 )}
             >
                 Add New Task

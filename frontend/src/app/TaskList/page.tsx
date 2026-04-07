@@ -44,18 +44,18 @@ export default function Home() {
         }
     };
 
-    const handleAddTask = async () => {
+    const handleAddTask = async (title: string, date: number) => {
         setStatus("Sending task...");
 
         const response = await fetch("http://127.0.0.1:5000/api/inserttask", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                taskbody: "pick up meds",
+                taskbody: title,
+                taskdate: date,
                 taskdone: 0,
-                taskdate: 20240402,
-                taskrecurring: 1,
-                userid: 2,
+                taskrecurring: 0,
+                userid: 3, // DUMMY USER UNTIL AUTH IS SET UP
             }),
         });
 
@@ -69,7 +69,7 @@ export default function Home() {
     return (
         <div className={styles.taskListContainer}>
             <div className="header">
-                <NewTaskForm onAddTask={console.log} />
+                <NewTaskForm onAddTask={handleAddTask} />
             </div>
             <ul>
                 {tasks.map((task) => (
@@ -87,9 +87,6 @@ export default function Home() {
             </ul>
 
             <div>
-                <button onClick={handleAddTask}>Send dummy task</button>
-            </div>
-            <div>
                 <form onSubmit={getTasks}>
                     <input
                         name="userid"
@@ -98,7 +95,7 @@ export default function Home() {
                         required
                         className="text-white p-2 border"
                     />
-                    <button type="submit">{"Submit"}</button>
+                    <button type="submit">{"Retrieve user tasks"}</button>
                 </form>
             </div>
         </div>

@@ -14,7 +14,6 @@ export interface UserObject {
 export default function TodoList() {
     const [users, setusers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const [status, setstatus] = useState("");
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -43,7 +42,6 @@ export default function TodoList() {
 
     return (
         <div className={styles.userListContainer}>
-            <h1>User List</h1>
             <ul>
                 {users.map((user) => (
                     <User
@@ -55,12 +53,8 @@ export default function TodoList() {
             </ul>
 
             <div>
-                <p>{status}</p>
-            </div>
-            <div>
                 <NewUserForm />
             </div>
-            <div>{status}</div>
             <Link href={`/TaskList`}>Click here for the nuTask List.</Link>
         </div>
     );
