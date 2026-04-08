@@ -1,8 +1,9 @@
 "use client";
 import NewTaskForm from "app/components/NewTaskForm";
-import Task from "../components/Task";
+import Task from "../../components/Task";
 import React, { useState, useEffect } from "react";
 import styles from "./TaskList.module.scss";
+import { useParams } from "next/navigation";
 
 export interface TaskObject {
     taskid: number;
@@ -13,7 +14,9 @@ export interface TaskObject {
     userid: number;
 }
 
-export default function Home() {
+export default function TaskListPage() {
+    const params = useParams();
+    const userid = params.userid;
     const [status, setStatus] = useState("");
     const [tasks, setTasks] = useState<TaskObject[]>([]);
     const [loading, setLoading] = useState(true);

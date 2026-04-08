@@ -67,9 +67,11 @@ def seed_tasks():
 
     # (taskbody, taskdone, taskdate, taskrecurring, userid)
     tasks_to_add = [
-        ('Buy Milk', 0, 20240401, 0, 1),  # For Alice (ID 1)
-        ('Fix Sink', 0, 20240401, 1, 1),  # For Alice (ID 1)
-        ('Car Wash', 1, 20240402, 0, 2)  # For Bob (ID 2)
+        ('Buy milk', 0, 20240401, 0, 1),  # (ID 1)
+        ('Fix sink', 0, 20240401, 1, 1),  # (ID 1)
+        ('Car wash', 1, 20240402, 0, 2),  # (ID 2)
+        ('Eat some cheese', 1, 20240401, 0, 2),  # (ID 2)
+        ('Three bags of trash', 0, 20240401, 1, 3),  # (ID 2)
     ]
 
     try:

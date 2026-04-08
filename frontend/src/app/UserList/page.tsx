@@ -12,8 +12,9 @@ export interface UserObject {
 }
 
 export default function TodoList() {
-    const [users, setusers] = useState<any[]>([]);
+    const [users, setUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [userid, setUserid] = useState<number>(2);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -27,7 +28,7 @@ export default function TodoList() {
                 }
 
                 const data = await response.json();
-                setusers(data.users);
+                setUsers(data.users);
             } catch (err) {
                 console.error("Error fetching data:", err);
             } finally {
@@ -55,7 +56,7 @@ export default function TodoList() {
             <div>
                 <NewUserForm />
             </div>
-            <Link href={`/TaskList`}>Click here for the nuTask List.</Link>
+            <Link href={`/TaskList/${userid}`}>View Tasks</Link>
         </div>
     );
 }
