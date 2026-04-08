@@ -1,7 +1,7 @@
 "use client";
 import NewTaskForm from "app/components/NewTaskForm";
 import Task from "../../components/Task";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "./TaskList.module.scss";
 import { useParams } from "next/navigation";
 
@@ -21,18 +21,16 @@ export default function TaskListPage() {
     const [tasks, setTasks] = useState<TaskObject[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const getTasks = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const fetchTasks = useCallback(async (uid: number) => {
+        if (!uid) return;
+
         setLoading(true);
-
-        const formData = new FormData(e.currentTarget);
-        const userid = formData.get("userid") as string;
-
         try {
             const res = await fetch("http://127.0.0.1:5000/api/get_tasks", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userid }),
+                // Sending the userid from the URL params
+                body: JSON.stringify({ userid: uid }),
             });
 
             if (!res.ok) throw new Error("Network response was not ok");
@@ -41,11 +39,15 @@ export default function TaskListPage() {
             console.log("Success:", data);
             setTasks(data.tasks);
         } catch (err) {
-            console.error("Submission error:", err);
+            console.error("Fetch error:", err);
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchTasks(userid);
+    }, [userid, fetchTasks]);
 
     const handleAddTask = async (title: string, date: number) => {
         setStatus("Sending task...");
@@ -88,19 +90,6 @@ export default function TaskListPage() {
                     </li>
                 ))}
             </ul>
-
-            <div>
-                <form onSubmit={getTasks}>
-                    <input
-                        name="userid"
-                        type="userid"
-                        placeholder="Please enter user ID"
-                        required
-                        className="text-white p-2 border"
-                    />
-                    <button type="submit">{"Retrieve user tasks"}</button>
-                </form>
-            </div>
         </div>
     );
 }
