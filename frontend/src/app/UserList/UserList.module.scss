@@ -1,3 +1,20 @@
 .userListContainer {
     margin: 5% 10% 0;
 }
+
+.viewTasks {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    // when user is defined
+    &.active {
+        font-weight: bold;
+    }
+
+    // when user is not defined
+    &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}

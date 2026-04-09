@@ -29,7 +29,6 @@ export default function TaskListPage() {
             const res = await fetch("http://127.0.0.1:5000/api/get_tasks", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                // Sending the userid from the URL params
                 body: JSON.stringify({ userid: uid }),
             });
 
