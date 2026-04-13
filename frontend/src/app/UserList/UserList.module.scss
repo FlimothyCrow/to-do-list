@@ -2,7 +2,7 @@
     margin: 5% 10% 0;
 }
 
-.viewTasks {
+.viewTasksLink {
     padding: 10px;
     cursor: pointer;
     transition: background 0.3s ease;
@@ -17,4 +17,16 @@
         opacity: 0.5;
         pointer-events: none;
     }
+}
+
+.user {
+    background-color: transparent;
+    transition: background 0.2s ease;
+
+    &.selected {
+        background-color: #f0f7ff;
+    }
+}
+.user:hover {
+    cursor: pointer;
 }
