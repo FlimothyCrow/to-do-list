@@ -16,10 +16,12 @@ export default function TodoList() {
     const [users, setUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [userid, setUserid] = useState<number>();
+    const [username, setUsername] = useState<string>();
 
-    const chooseUser = (id: number) => {
+    const chooseUser = (id: number, name: string) => {
         console.log("User ID:", id);
         setUserid(id);
+        setUsername(name);
     };
 
     useEffect(() => {
@@ -50,7 +52,7 @@ export default function TodoList() {
             <ul>
                 {users.map((user) => (
                     <li
-                        onClick={() => chooseUser(user.userid)}
+                        onClick={() => chooseUser(user.userid, user.username)}
                         key={user.userid}
                     >
                         <User
@@ -71,7 +73,9 @@ export default function TodoList() {
                     [styles.disabled]: !userid,
                 })}
             >
-                <Link href={`/TaskList/${userid}`}>View Tasks</Link>
+                <Link href={`/TaskList/${userid}`}>
+                    {userid ? `View ${username}'s Tasks` : "Choose a User"}
+                </Link>
             </div>
         </div>
     );
