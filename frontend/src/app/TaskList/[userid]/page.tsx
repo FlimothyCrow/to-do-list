@@ -45,11 +45,31 @@ export default function TaskListPage() {
     }, []);
 
     useEffect(() => {
-        fetchTasks(userid);
+        if (userid) {
+            const uid = Array.isArray(userid)
+                ? parseInt(userid[0])
+                : parseInt(userid);
+
+            if (!isNaN(uid)) {
+                fetchTasks(uid);
+            }
+        }
     }, [userid, fetchTasks]);
 
     const handleAddTask = async (title: string, date: number) => {
-        // page isn't refreshing, this button should trigger a re-render
+        if (!userid) {
+            setStatus("Error: User not identified.");
+            return;
+        }
+        const uid = Array.isArray(userid)
+            ? parseInt(userid[0])
+            : parseInt(userid);
+
+        if (isNaN(uid)) {
+            setStatus("Error: Invalid User ID.");
+            return;
+        }
+
         setStatus("Sending task...");
 
         const response = await fetch("http://127.0.0.1:5000/api/inserttask", {
@@ -60,12 +80,13 @@ export default function TaskListPage() {
                 taskdate: date,
                 taskdone: 0,
                 taskrecurring: 0,
-                userid: userid, // DUMMY USER UNTIL AUTH IS SET UP
+                userid: userid,
             }),
         });
 
         if (response.ok) {
             setStatus("Successful task insert!");
+            await fetchTasks(uid);
         } else {
             setStatus("Error sending data.");
         }
