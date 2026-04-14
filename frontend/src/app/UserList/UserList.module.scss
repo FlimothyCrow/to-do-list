@@ -2,9 +2,9 @@
     margin: 5% 10% 0;
 }
 
-.viewTasksLink {
+.viewTasksBox {
     padding: 10px;
-    cursor: pointer;
+
     transition: background 0.3s ease;
 
     // when user is defined
@@ -17,6 +17,10 @@
         opacity: 0.5;
         pointer-events: none;
     }
+}
+
+.viewTasksLink {
+    cursor: pointer;
 }
 
 .user {

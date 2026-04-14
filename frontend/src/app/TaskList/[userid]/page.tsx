@@ -49,6 +49,7 @@ export default function TaskListPage() {
     }, [userid, fetchTasks]);
 
     const handleAddTask = async (title: string, date: number) => {
+        // page isn't refreshing, this button should trigger a re-render
         setStatus("Sending task...");
 
         const response = await fetch("http://127.0.0.1:5000/api/inserttask", {
@@ -59,7 +60,7 @@ export default function TaskListPage() {
                 taskdate: date,
                 taskdone: 0,
                 taskrecurring: 0,
-                userid: 3, // DUMMY USER UNTIL AUTH IS SET UP
+                userid: userid, // DUMMY USER UNTIL AUTH IS SET UP
             }),
         });
 

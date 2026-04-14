@@ -52,7 +52,6 @@ export default function TodoList() {
             <ul>
                 {users.map((user) => (
                     <li
-                        // className={styles.user}
                         className={clsx(styles.user, {
                             [styles.selected]: userid === user.userid,
                         })}
@@ -72,12 +71,15 @@ export default function TodoList() {
                 <NewUserForm />
             </div>
             <div
-                className={clsx(styles.viewTasksLink, {
+                className={clsx(styles.viewTasksBox, {
                     [styles.active]: userid,
                     [styles.disabled]: !userid,
                 })}
             >
-                <Link href={`/TaskList/${userid}`}>
+                <Link
+                    className={styles.viewTasksLink}
+                    href={`/TaskList/${userid}`}
+                >
                     {userid ? `View ${username}'s Tasks` : "Choose a User"}
                 </Link>
             </div>
