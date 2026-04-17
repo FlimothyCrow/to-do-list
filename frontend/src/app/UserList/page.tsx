@@ -24,28 +24,24 @@ export default function TodoList() {
         setUsername(name);
     };
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await fetch(
-                    "http://127.0.0.1:5000/api/get_users",
-                );
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/api/get_users");
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                setUsers(data.users);
-            } catch (err) {
-                console.error("Error fetching data:", err);
-            } finally {
-                setLoading(false);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        };
 
-        fetchUsers();
-    }, []);
+            const data = await response.json();
+            setUsers(data.users);
+        } catch (err) {
+            console.error("Error fetching data:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchUsers();
 
     return (
         <div className={styles.userListContainer}>
@@ -68,7 +64,7 @@ export default function TodoList() {
             </ul>
 
             <div>
-                <NewUserForm />
+                <NewUserForm onAddUser={fetchUsers} />
             </div>
             <div
                 className={clsx(styles.viewTasksBox, {

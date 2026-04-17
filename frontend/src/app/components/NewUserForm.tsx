@@ -2,7 +2,11 @@
 import styles from "./NewUserForm.module.scss";
 import React, { useState } from "react";
 
-const NewUserForm = ({}) => {
+type NewUserFormProps = {
+    onAddUser: () => Promise<void>;
+};
+
+const NewUserForm = ({ onAddUser }: NewUserFormProps) => {
     const [status, setStatus] = useState("");
     const [username, setUsername] = useState<string>("");
     const [useremail, setuseremail] = useState<string>("");
@@ -21,11 +25,12 @@ const NewUserForm = ({}) => {
 
         if (response.ok) {
             setStatus("Success!");
+            await onAddUser();
+            setUsername("");
+            setuseremail("");
         } else {
             setStatus("Error sending data.");
         }
-        setUsername("");
-        setuseremail("");
     };
 
     return (
@@ -50,6 +55,7 @@ const NewUserForm = ({}) => {
             >
                 Submit New User
             </button>
+            <div>{status}</div>
         </div>
     );
 };
