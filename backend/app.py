@@ -71,7 +71,7 @@ def seed_tasks():
         ('Fix sink', 0, 20240401, 1, 1),  # (ID 1)
         ('Car wash', 1, 20240402, 0, 2),  # (ID 2)
         ('Eat some cheese', 1, 20240401, 0, 2),  # (ID 2)
-        ('Three bags of trash', 0, 20240401, 1, 3),  # (ID 2)
+        ('Three bags of trash', 0, 20240401, 1, 3),  # (ID 3)
     ]
 
     try:
