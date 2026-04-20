@@ -19,7 +19,7 @@ def init_db():
         conn = sqlite3.connect(str(DB_PATH))
         conn.execute("PRAGMA foreign_keys = ON;")
 
-        sql_files = ['schema/01_users.sql', 'schema/02_tasks.sql']
+        sql_files = ['../schema/01_users.sql', '../schema/02_tasks.sql']
         for f_name in sql_files:
             with open(BASE_DIR / f_name, 'r') as f:
                 conn.executescript(f.read())
